@@ -20,7 +20,7 @@ public class User {
     private String login;
     private Contact contact;
     //private Set<Role> roles; after
-    private Status status;
+    private Status status = Status.PENDING;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 

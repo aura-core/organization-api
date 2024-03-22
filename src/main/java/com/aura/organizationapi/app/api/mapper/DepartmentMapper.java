@@ -2,13 +2,10 @@ package com.aura.organizationapi.app.api.mapper;
 
 import com.aura.organizationapi.app.api.dto.DepartmentDTO;
 import com.aura.organizationapi.app.api.dto.DepartmentFormDTO;
+import com.aura.organizationapi.app.api.mapper.commons.ContactMapper;
 import com.aura.organizationapi.domain.model.Department;
 import com.aura.organizationapi.domain.model.User;
-import com.aura.organizationapi.domain.model.commons.Contact;
 import lombok.experimental.UtilityClass;
-
-import java.time.LocalDateTime;
-import java.util.UUID;
 
 @UtilityClass
 public class DepartmentMapper {
@@ -43,10 +40,6 @@ public class DepartmentMapper {
 
     private static DepartmentDTO.Status map(Department.Status status) {
         return DepartmentDTO.Status.valueOf(status.name());
-    }
-
-    private static Department.Status map(DepartmentDTO.Status statusDto) {
-        return Department.Status.valueOf(statusDto.name());
     }
 
 }

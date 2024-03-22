@@ -19,7 +19,7 @@ public class JobPosition {
     private String name;
     private String description;
     private Set<Role> roles;
-    private Status status;
+    private Status status = Status.ACTIVE;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 

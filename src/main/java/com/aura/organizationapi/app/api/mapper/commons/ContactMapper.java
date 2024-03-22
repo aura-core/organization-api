@@ -1,4 +1,4 @@
-package com.aura.organizationapi.app.api.mapper;
+package com.aura.organizationapi.app.api.mapper.commons;
 
 import com.aura.organizationapi.app.api.dto.commons.ContactDTO;
 import com.aura.organizationapi.domain.model.commons.Contact;

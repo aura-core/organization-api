@@ -11,5 +11,12 @@ public record JobPositionDTO(
         @Size(max = 80) String name,
         @Size(max = 80) String description,
         Set<RoleDTO> roles,
-        String status) {
+        Status status) {
+
+    public enum Status {
+        ACTIVE,
+        INACTIVE,
+        DELETED
+    }
+
 }

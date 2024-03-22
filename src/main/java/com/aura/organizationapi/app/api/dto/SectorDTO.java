@@ -11,5 +11,12 @@ public record SectorDTO(
         @Size(max = 80) String description,
         UserDTO responsible,
         ContactDTO contact,
-        String status) {
+        Status status) {
+
+    public enum Status {
+        ACTIVE,
+        INACTIVE,
+        DELETED
+    }
+
 }

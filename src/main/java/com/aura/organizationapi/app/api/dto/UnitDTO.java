@@ -13,5 +13,12 @@ public record UnitDTO(
         UserDTO responsible,
         AddressDTO address,
         ContactDTO contact,
-        String status) {
+        Status status) {
+
+    public enum Status {
+        ACTIVE,
+        INACTIVE,
+        DELETED
+    }
+
 }

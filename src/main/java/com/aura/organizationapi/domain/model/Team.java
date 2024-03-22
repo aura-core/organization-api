@@ -19,7 +19,7 @@ public class Team {
     private String description;
     private User responsible;
     private Contact contact;
-    private Status status;
+    private Status status = Status.ACTIVE;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 

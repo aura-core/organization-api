@@ -21,7 +21,7 @@ public class Unit {
     private User responsible;
     private Address address;
     private Contact contact;
-    private Status status;
+    private Status status = Status.ACTIVE;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
