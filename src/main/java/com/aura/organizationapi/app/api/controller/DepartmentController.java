@@ -6,6 +6,7 @@ import com.aura.organizationapi.app.api.mapper.DepartmentMapper;
 import com.aura.organizationapi.domain.model.Department;
 import com.aura.organizationapi.domain.service.DepartmentService;
 import com.aura.organizationapi.domain.util.filter.DepartmentFilter;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -42,14 +43,14 @@ public class DepartmentController {
     }
 
     @PostMapping
-    public ResponseEntity<DepartmentDTO> create(@RequestBody DepartmentFormDTO form) {
+    public ResponseEntity<DepartmentDTO> create(@RequestBody @Valid DepartmentFormDTO form) {
         Department department = departmentService.create(form);
         DepartmentDTO dto = DepartmentMapper.toDepartmentDTO(department);
         return ResponseEntity.created(URI.create("/api/v1/departments/" + dto.id())).body(dto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DepartmentDTO> update(@PathVariable UUID id, @RequestBody DepartmentFormDTO form) {
+    public ResponseEntity<DepartmentDTO> update(@PathVariable UUID id, @RequestBody @Valid DepartmentFormDTO form) {
         Department department = departmentService.update(id, form);
         DepartmentDTO dto = DepartmentMapper.toDepartmentDTO(department);
         return ResponseEntity.ok(dto);

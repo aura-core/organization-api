@@ -1,23 +1,20 @@
 package com.aura.organizationapi.infrastructure.provider.postgres.entity;
 
-import com.aura.organizationapi.domain.model.Sector;
-import com.aura.organizationapi.domain.model.User;
-import com.aura.organizationapi.domain.model.commons.Contact;
 import com.aura.organizationapi.infrastructure.provider.postgres.entity.commons.ContactEntity;
+import com.aura.organizationapi.infrastructure.provider.postgres.util.Auditable;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
 @Setter
-@EqualsAndHashCode(of = {"id"})
+@EqualsAndHashCode(of = {"id"}, callSuper = false)
 @Entity
 @Table(name = "sectors")
-public class SectorEntity {
+public class SectorEntity extends Auditable<String> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -39,12 +36,6 @@ public class SectorEntity {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Status status;
-
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
-
-    @Column(nullable = false)
-    private LocalDateTime updatedAt;
 
     public enum Status {
         ACTIVE,

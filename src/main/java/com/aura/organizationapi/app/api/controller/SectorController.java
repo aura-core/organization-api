@@ -6,6 +6,7 @@ import com.aura.organizationapi.app.api.mapper.SectorMapper;
 import com.aura.organizationapi.domain.model.Sector;
 import com.aura.organizationapi.domain.service.SectorService;
 import com.aura.organizationapi.domain.util.filter.SectorFilter;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -42,14 +43,14 @@ public class SectorController {
     }
 
     @PostMapping
-    public ResponseEntity<SectorDTO> create(@RequestBody SectorFormDTO form) {
+    public ResponseEntity<SectorDTO> create(@RequestBody @Valid SectorFormDTO form) {
         Sector sector = sectorService.create(form);
         SectorDTO dto = SectorMapper.toSectorDTO(sector);
         return ResponseEntity.created(URI.create("/api/v1/sectors/" + dto.id())).body(dto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SectorDTO> update(@PathVariable UUID id, @RequestBody SectorFormDTO form) {
+    public ResponseEntity<SectorDTO> update(@PathVariable UUID id, @RequestBody @Valid SectorFormDTO form) {
         Sector sector = sectorService.update(id, form);
         SectorDTO dto = SectorMapper.toSectorDTO(sector);
         return ResponseEntity.ok(dto);

@@ -6,6 +6,7 @@ import com.aura.organizationapi.app.api.mapper.UnitMapper;
 import com.aura.organizationapi.domain.model.Unit;
 import com.aura.organizationapi.domain.service.UnitService;
 import com.aura.organizationapi.domain.util.filter.UnitFilter;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -42,14 +43,14 @@ public class UnitController {
     }
 
     @PostMapping
-    public ResponseEntity<UnitDTO> create(@RequestBody UnitFormDTO form) {
+    public ResponseEntity<UnitDTO> create(@RequestBody @Valid UnitFormDTO form) {
         Unit unit = unitService.create(form);
         UnitDTO dto = UnitMapper.toUnitDTO(unit);
         return ResponseEntity.created(URI.create("/api/v1/units/" + dto.id())).body(dto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UnitDTO> update(@PathVariable UUID id, @RequestBody UnitFormDTO form) {
+    public ResponseEntity<UnitDTO> update(@PathVariable UUID id, @RequestBody @Valid UnitFormDTO form) {
         Unit unit = unitService.update(id, form);
         UnitDTO dto = UnitMapper.toUnitDTO(unit);
         return ResponseEntity.ok(dto);

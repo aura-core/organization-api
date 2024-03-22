@@ -6,6 +6,7 @@ import com.aura.organizationapi.app.api.mapper.TeamMapper;
 import com.aura.organizationapi.domain.model.Team;
 import com.aura.organizationapi.domain.service.TeamService;
 import com.aura.organizationapi.domain.util.filter.TeamFilter;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -42,14 +43,14 @@ public class TeamController {
     }
 
     @PostMapping
-    public ResponseEntity<TeamDTO> create(@RequestBody TeamFormDTO form) {
+    public ResponseEntity<TeamDTO> create(@RequestBody @Valid TeamFormDTO form) {
         Team team = teamService.create(form);
         TeamDTO dto = TeamMapper.toTeamDTO(team);
         return ResponseEntity.created(URI.create("/api/v1/teams/" + dto.id())).body(dto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TeamDTO> update(@PathVariable UUID id, @RequestBody TeamFormDTO form) {
+    public ResponseEntity<TeamDTO> update(@PathVariable UUID id, @RequestBody @Valid TeamFormDTO form) {
         Team team = teamService.update(id, form);
         TeamDTO dto = TeamMapper.toTeamDTO(team);
         return ResponseEntity.ok(dto);

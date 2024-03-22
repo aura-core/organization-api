@@ -1,5 +1,6 @@
 package com.aura.organizationapi.infrastructure.provider.postgres.entity;
 
+import com.aura.organizationapi.infrastructure.provider.postgres.util.Auditable;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -11,10 +12,10 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@EqualsAndHashCode(of = {"id"})
+@EqualsAndHashCode(of = {"id"}, callSuper = false)
 @Entity
 @Table(name = "possitions")
-public class JobPositionEntity {
+public class JobPositionEntity extends Auditable<String> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -33,12 +34,6 @@ public class JobPositionEntity {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Status status;
-
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
-
-    @Column(nullable = false)
-    private LocalDateTime updatedAt;
 
     public enum Status {
         ACTIVE,

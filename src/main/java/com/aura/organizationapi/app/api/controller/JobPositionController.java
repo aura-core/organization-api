@@ -7,6 +7,7 @@ import com.aura.organizationapi.app.api.mapper.JobPositionMapper;
 import com.aura.organizationapi.domain.model.JobPosition;
 import com.aura.organizationapi.domain.service.JobPositionService;
 import com.aura.organizationapi.domain.util.filter.JobPositionFilter;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -44,14 +45,14 @@ public class JobPositionController {
     }
 
     @PostMapping
-    public ResponseEntity<JobPositionDTO> create(@RequestBody JobPositionFormDTO form) {
+    public ResponseEntity<JobPositionDTO> create(@RequestBody @Valid JobPositionFormDTO form) {
         JobPosition jobPosition = jobPositionService.create(form);
         JobPositionDTO dto = JobPositionMapper.toJobPositionDTO(jobPosition);
         return ResponseEntity.created(URI.create("/api/v1/job-positions/" + dto.id())).body(dto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<JobPositionDTO> update(@PathVariable UUID id, @RequestBody JobPositionFormDTO form) {
+    public ResponseEntity<JobPositionDTO> update(@PathVariable UUID id, @RequestBody @Valid JobPositionFormDTO form) {
         JobPosition jobPosition = jobPositionService.update(id, form);
         JobPositionDTO dto = JobPositionMapper.toJobPositionDTO(jobPosition);
         return ResponseEntity.ok(dto);

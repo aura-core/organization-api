@@ -2,6 +2,7 @@ package com.aura.organizationapi.app.config.exception;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mapping.PropertyReferenceException;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -80,6 +81,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(PropertyReferenceException.class)
     @ResponseBody
     public ApiExceptionDetail handlePropertyReferenceException(PropertyReferenceException e) {
+        log.warn(formatLog(e));
+        return new ApiExceptionDetail(BAD_REQUEST, e);
+    }
+
+    @ResponseStatus(BAD_REQUEST)
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ResponseBody
+    public ApiExceptionDetail handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
         log.warn(formatLog(e));
         return new ApiExceptionDetail(BAD_REQUEST, e);
     }

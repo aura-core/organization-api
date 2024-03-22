@@ -6,6 +6,7 @@ import com.aura.organizationapi.app.api.mapper.UserMapper;
 import com.aura.organizationapi.domain.model.User;
 import com.aura.organizationapi.domain.service.UserService;
 import com.aura.organizationapi.domain.util.filter.UserFilter;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -42,14 +43,14 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> create(@RequestBody UserFormDTO form) {
+    public ResponseEntity<UserDTO> create(@RequestBody @Valid UserFormDTO form) {
         User user = userService.create(form);
         UserDTO dto = UserMapper.toUserDTO(user);
         return ResponseEntity.created(URI.create("/api/v1/users/" + dto.id())).body(dto);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<UserDTO> update(@PathVariable UUID id, UserFormDTO form) {
+    public ResponseEntity<UserDTO> update(@PathVariable UUID id, @Valid UserFormDTO form) {
         User user = userService.update(id, form);
         UserDTO dto = UserMapper.toUserDTO(user);
         return ResponseEntity.ok(dto);
