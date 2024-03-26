@@ -27,3 +27,7 @@ logging:
   level:
     root: WARN
     com.aura: INFO
+
+springdoc:
+  swagger-ui:
+    path: /swagger

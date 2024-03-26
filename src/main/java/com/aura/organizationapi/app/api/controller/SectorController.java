@@ -1,10 +1,8 @@
 package com.aura.organizationapi.app.api.controller;
 
-import com.aura.organizationapi.app.api.dto.JobPositionDTO;
 import com.aura.organizationapi.app.api.dto.SectorDTO;
 import com.aura.organizationapi.app.api.dto.SectorFormDTO;
 import com.aura.organizationapi.domain.mapper.SectorMapper;
-import com.aura.organizationapi.domain.model.JobPosition;
 import com.aura.organizationapi.domain.model.Sector;
 import com.aura.organizationapi.domain.service.SectorService;
 import com.aura.organizationapi.domain.util.filter.SectorFilter;

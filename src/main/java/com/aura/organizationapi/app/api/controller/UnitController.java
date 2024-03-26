@@ -1,10 +1,8 @@
 package com.aura.organizationapi.app.api.controller;
 
-import com.aura.organizationapi.app.api.dto.TeamDTO;
 import com.aura.organizationapi.app.api.dto.UnitDTO;
 import com.aura.organizationapi.app.api.dto.UnitFormDTO;
 import com.aura.organizationapi.domain.mapper.UnitMapper;
-import com.aura.organizationapi.domain.model.Team;
 import com.aura.organizationapi.domain.model.Unit;
 import com.aura.organizationapi.domain.service.UnitService;
 import com.aura.organizationapi.domain.util.filter.UnitFilter;

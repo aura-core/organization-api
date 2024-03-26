@@ -2,13 +2,8 @@ package com.aura.organizationapi.domain.mapper;
 
 import com.aura.organizationapi.app.api.dto.TeamDTO;
 import com.aura.organizationapi.app.api.dto.TeamFormDTO;
-import com.aura.organizationapi.app.api.dto.UnitDTO;
-import com.aura.organizationapi.app.api.dto.UnitFormDTO;
-import com.aura.organizationapi.domain.mapper.commons.ContactMapper;
 import com.aura.organizationapi.domain.model.Team;
-import com.aura.organizationapi.domain.model.Unit;
 import com.aura.organizationapi.domain.model.User;
-import lombok.experimental.UtilityClass;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.ReportingPolicy;
