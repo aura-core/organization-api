@@ -59,24 +59,6 @@ public class JobPositionController {
         return ResponseEntity.ok(dto);
     }
 
-    @PatchMapping("/add-roles/{id}")
-    public ResponseEntity<JobPositionDTO> addRoles(@PathVariable UUID id, Set<RoleDTO> roles) {
-        //User user = UserMapper.toUser(id, dto);
-        //User updatedUser = userService.update(user);
-        //UserDTO updateUserDTO = UserMapper.toUserDTO(updatedUser);
-        //return ResponseEntity.ok(updateUserDTO);
-        return null;
-    }
-
-    @PatchMapping("/remove-roles/{id}")
-    public ResponseEntity<JobPositionDTO> removeRoles(@PathVariable UUID id, Set<RoleDTO> roles) {
-        //User user = UserMapper.toUser(id, dto);
-        //User updatedUser = userService.update(user);
-        //UserDTO updateUserDTO = UserMapper.toUserDTO(updatedUser);
-        //return ResponseEntity.ok(updateUserDTO);
-        return null;
-    }
-
     @PatchMapping("/inactivate/{id}")
     public ResponseEntity<JobPositionDTO> inactivate(@PathVariable UUID id) {
         JobPosition jobPosition = jobPositionService.inactivate(id);

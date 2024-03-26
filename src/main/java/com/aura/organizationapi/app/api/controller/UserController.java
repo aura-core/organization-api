@@ -2,6 +2,8 @@ package com.aura.organizationapi.app.api.controller;
 
 import com.aura.organizationapi.app.api.dto.UserDTO;
 import com.aura.organizationapi.app.api.dto.UserFormDTO;
+import com.aura.organizationapi.app.api.dto.commons.RoleDTO;
+import com.aura.organizationapi.domain.mapper.RoleMapper;
 import com.aura.organizationapi.domain.mapper.UserMapper;
 import com.aura.organizationapi.domain.model.User;
 import com.aura.organizationapi.domain.service.UserService;
@@ -16,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.Set;
 import java.util.UUID;
 
 @Slf4j
@@ -27,6 +30,7 @@ public class UserController {
 
     private final UserService userService;
     private final UserMapper userMapper;
+    private final RoleMapper roleMapper;
 
     @GetMapping
     public ResponseEntity<Page<UserDTO>> findAll(@PageableDefault Pageable page,
@@ -53,6 +57,20 @@ public class UserController {
     @PatchMapping("/{id}")
     public ResponseEntity<UserDTO> update(@PathVariable UUID id, @Valid UserFormDTO form) {
         User user = userService.update(id, form);
+        UserDTO dto = userMapper.toUserDTO(user);
+        return ResponseEntity.ok(dto);
+    }
+
+    @PatchMapping("/add-roles/{id}")
+    public ResponseEntity<UserDTO> addRoles(@PathVariable UUID id, Set<RoleDTO> rolesDto) {
+        User user = userService.addRoles(id, rolesDto);
+        UserDTO dto = userMapper.toUserDTO(user);
+        return ResponseEntity.ok(dto);
+    }
+
+    @PatchMapping("/remove-roles/{id}")
+    public ResponseEntity<UserDTO> removeRoles(@PathVariable UUID id, Set<RoleDTO> rolesDto) {
+        User user = userService.removeRoles(id, rolesDto);
         UserDTO dto = userMapper.toUserDTO(user);
         return ResponseEntity.ok(dto);
     }

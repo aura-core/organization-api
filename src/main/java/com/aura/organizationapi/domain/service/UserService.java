@@ -1,9 +1,12 @@
 package com.aura.organizationapi.domain.service;
 
 import com.aura.organizationapi.app.api.dto.UserFormDTO;
+import com.aura.organizationapi.app.api.dto.commons.RoleDTO;
+import com.aura.organizationapi.domain.mapper.RoleMapper;
 import com.aura.organizationapi.domain.mapper.UserMapper;
 import com.aura.organizationapi.domain.model.Unit;
 import com.aura.organizationapi.domain.model.User;
+import com.aura.organizationapi.domain.model.commons.Role;
 import com.aura.organizationapi.domain.repository.UserRepository;
 import com.aura.organizationapi.domain.util.exception.UserNotFoundException;
 import com.aura.organizationapi.domain.util.filter.UserFilter;
@@ -13,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
 import java.util.UUID;
 
 @Slf4j
@@ -22,6 +26,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final RoleMapper roleMapper;
 
     public Page<User> findAll(Pageable pageable, UserFilter filter) {
         return userRepository.findAll(pageable, filter);
@@ -40,6 +45,20 @@ public class UserService {
     public User update(UUID id, UserFormDTO userFormDTO) {
         User user = findById(id);
         userMapper.updateUserFromDTO(user, userFormDTO);
+        return userRepository.update(user);
+    }
+
+    public User addRoles(UUID id, Set<RoleDTO> rolesDTO) {
+        User user = findById(id);
+        Set<Role> roles = roleMapper.toRole(rolesDTO);
+        user.getRoles().addAll(roles);
+        return userRepository.update(user);
+    }
+
+    public User removeRoles(UUID id, Set<RoleDTO> rolesDTO) {
+        User user = findById(id);
+        Set<Role> roles = roleMapper.toRole(rolesDTO);
+        user.getRoles().removeAll(roles);
         return userRepository.update(user);
     }
 

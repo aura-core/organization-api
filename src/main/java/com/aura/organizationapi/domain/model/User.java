@@ -1,12 +1,14 @@
 package com.aura.organizationapi.domain.model;
 
 import com.aura.organizationapi.domain.model.commons.Contact;
+import com.aura.organizationapi.domain.model.commons.Role;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -19,7 +21,7 @@ public class User {
     private String email;
     private String login;
     private Contact contact;
-    //private Set<Role> roles;
+    private Set<Role> roles;
     private Status status = Status.PENDING;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

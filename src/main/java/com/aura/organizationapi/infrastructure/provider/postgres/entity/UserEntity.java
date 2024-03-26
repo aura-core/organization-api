@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -32,6 +33,10 @@ public class UserEntity extends Auditable<String> {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    @Column(length = 80, nullable = false)
+    @ElementCollection
+    private Set<String> roles;
 
     @Embedded
     private ContactEntity contact;
