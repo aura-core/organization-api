@@ -1,7 +1,7 @@
 package com.aura.organizationapi.domain.service;
 
 import com.aura.organizationapi.app.api.dto.DepartmentFormDTO;
-import com.aura.organizationapi.app.api.mapper.DepartmentMapper;
+import com.aura.organizationapi.domain.mapper.DepartmentMapper;
 import com.aura.organizationapi.domain.model.Department;
 import com.aura.organizationapi.domain.model.User;
 import com.aura.organizationapi.domain.repository.DepartmentRepository;
@@ -22,6 +22,7 @@ public class DepartmentService {
 
     private final DepartmentRepository departmentRepository;
     private final UserService userService;
+    private final DepartmentMapper departmentMapper;
 
     public Page<Department> findAll(Pageable pageable, DepartmentFilter filter) {
         return departmentRepository.findAll(pageable, filter);
@@ -34,14 +35,14 @@ public class DepartmentService {
 
     public Department create(DepartmentFormDTO departmentFormDTO) {
         User responsible = userService.findById(departmentFormDTO.responsibleId());
-        Department department = DepartmentMapper.toDepartment(departmentFormDTO, responsible);
+        Department department = departmentMapper.toDepartment(departmentFormDTO, responsible);
         return departmentRepository.create(department);
     }
 
     public Department update(UUID id, DepartmentFormDTO departmentFormDTO) {
-        Department oldDepartment = findById(id);
+        Department department = findById(id);
         User responsible = userService.findById(departmentFormDTO.responsibleId());
-        Department department = DepartmentMapper.toDepartment(oldDepartment, departmentFormDTO, responsible);
+        departmentMapper.updateDepartmentFromDTO(department, departmentFormDTO, responsible);
         return departmentRepository.update(department);
     }
 

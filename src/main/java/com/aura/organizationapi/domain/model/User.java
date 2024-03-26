@@ -19,7 +19,7 @@ public class User {
     private String email;
     private String login;
     private Contact contact;
-    //private Set<Role> roles; after
+    //private Set<Role> roles;
     private Status status = Status.PENDING;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -27,7 +27,7 @@ public class User {
     @Getter
     @AllArgsConstructor
     public enum Status {
-        ACTIVE("Active"),
+        ACTIVATED("Activated"),
         INACTIVE("Inactive"),
         PENDING("Pending Activation"),
         BLOCKED("Blocked"),

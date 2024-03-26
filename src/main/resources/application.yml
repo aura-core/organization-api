@@ -6,12 +6,15 @@ spring:
     banner-mode: off
   jackson:
     default-property-inclusion: NON_NULL
+  flyway:
+    enabled: false
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
   jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: false
     show-sql: true
     hibernate:

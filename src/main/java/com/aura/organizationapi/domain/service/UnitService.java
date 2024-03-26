@@ -1,16 +1,12 @@
 package com.aura.organizationapi.domain.service;
 
-import com.aura.organizationapi.app.api.dto.UnitDTO;
 import com.aura.organizationapi.app.api.dto.UnitFormDTO;
-import com.aura.organizationapi.app.api.mapper.UnitMapper;
+import com.aura.organizationapi.domain.mapper.UnitMapper;
 import com.aura.organizationapi.domain.model.Team;
 import com.aura.organizationapi.domain.model.Unit;
 import com.aura.organizationapi.domain.model.User;
-import com.aura.organizationapi.domain.repository.TeamRepository;
 import com.aura.organizationapi.domain.repository.UnitRepository;
-import com.aura.organizationapi.domain.util.exception.TeamNotFoundException;
 import com.aura.organizationapi.domain.util.exception.UnitNotFoundException;
-import com.aura.organizationapi.domain.util.filter.TeamFilter;
 import com.aura.organizationapi.domain.util.filter.UnitFilter;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +23,7 @@ public class UnitService {
 
     private final UnitRepository unitRepository;
     private final UserService userService;
+    private final UnitMapper unitMapper;
 
     public Page<Unit> findAll(Pageable pageable, UnitFilter filter) {
         return unitRepository.findAll(pageable, filter);
@@ -39,14 +36,26 @@ public class UnitService {
 
     public Unit create(UnitFormDTO unitFormDTO) {
         User responsible = userService.findById(unitFormDTO.responsibleId());
-        Unit unit = UnitMapper.toUnit(unitFormDTO, responsible);
+        Unit unit = unitMapper.toUnit(unitFormDTO, responsible);
         return unitRepository.create(unit);
     }
 
     public Unit update(UUID id, UnitFormDTO unitFormDTO) {
-        Unit oldUnit = findById(id);
+        Unit unit = findById(id);
         User responsible = userService.findById(unitFormDTO.responsibleId());
-        Unit unit = UnitMapper.toUnit(oldUnit, unitFormDTO, responsible);
+        unitMapper.updateUnitFromDTO(unit, unitFormDTO, responsible);
+        return unitRepository.update(unit);
+    }
+
+    public Unit inactivate(UUID id) {
+        Unit unit = findById(id);
+        unit.setStatus(Unit.Status.INACTIVE);
+        return unitRepository.update(unit);
+    }
+
+    public Unit logicallyDelete(UUID id) {
+        Unit unit = findById(id);
+        unit.setStatus(Unit.Status.DELETED);
         return unitRepository.update(unit);
     }
 

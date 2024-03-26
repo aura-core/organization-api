@@ -1,17 +1,12 @@
 package com.aura.organizationapi.domain.service;
 
-import com.aura.organizationapi.app.api.dto.TeamDTO;
 import com.aura.organizationapi.app.api.dto.TeamFormDTO;
-import com.aura.organizationapi.app.api.mapper.SectorMapper;
-import com.aura.organizationapi.app.api.mapper.TeamMapper;
+import com.aura.organizationapi.domain.mapper.TeamMapper;
 import com.aura.organizationapi.domain.model.Sector;
 import com.aura.organizationapi.domain.model.Team;
 import com.aura.organizationapi.domain.model.User;
-import com.aura.organizationapi.domain.repository.SectorRepository;
 import com.aura.organizationapi.domain.repository.TeamRepository;
-import com.aura.organizationapi.domain.util.exception.SectorNotFoundException;
 import com.aura.organizationapi.domain.util.exception.TeamNotFoundException;
-import com.aura.organizationapi.domain.util.filter.SectorFilter;
 import com.aura.organizationapi.domain.util.filter.TeamFilter;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +23,7 @@ public class TeamService {
 
     private final TeamRepository teamRepository;
     private final UserService userService;
+    private final TeamMapper teamMapper;
 
     public Page<Team> findAll(Pageable pageable, TeamFilter filter) {
         return teamRepository.findAll(pageable, filter);
@@ -40,14 +36,26 @@ public class TeamService {
 
     public Team create(TeamFormDTO teamFormDTO) {
         User responsible = userService.findById(teamFormDTO.responsibleId());
-        Team team = TeamMapper.toTeam(teamFormDTO, responsible);
+        Team team = teamMapper.toTeam(teamFormDTO, responsible);
         return teamRepository.create(team);
     }
 
     public Team update(UUID id, TeamFormDTO teamFormDTO) {
-        Team oldTeam = findById(id);
+        Team team = findById(id);
         User responsible = userService.findById(teamFormDTO.responsibleId());
-        Team team = TeamMapper.toTeam(oldTeam, teamFormDTO, responsible);
+        teamMapper.updateTeamFromDTO(team, teamFormDTO, responsible);
+        return teamRepository.update(team);
+    }
+
+    public Team inactivate(UUID id) {
+        Team team = findById(id);
+        team.setStatus(Team.Status.INACTIVE);
+        return teamRepository.update(team);
+    }
+
+    public Team logicallyDelete(UUID id) {
+        Team team = findById(id);
+        team.setStatus(Team.Status.DELETED);
         return teamRepository.update(team);
     }
 

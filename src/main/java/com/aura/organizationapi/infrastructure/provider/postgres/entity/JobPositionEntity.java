@@ -27,7 +27,7 @@ public class JobPositionEntity extends Auditable<String> {
     @Column(length = 80)
     private String description;
 
-    @Column(length = 80)
+    @Column(length = 80, nullable = false)
     @ElementCollection
     private Set<String> roles;
 

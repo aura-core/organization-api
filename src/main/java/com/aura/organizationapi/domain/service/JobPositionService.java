@@ -1,7 +1,8 @@
 package com.aura.organizationapi.domain.service;
 
 import com.aura.organizationapi.app.api.dto.JobPositionFormDTO;
-import com.aura.organizationapi.app.api.mapper.JobPositionMapper;
+import com.aura.organizationapi.domain.mapper.JobPositionMapper;
+import com.aura.organizationapi.domain.model.Department;
 import com.aura.organizationapi.domain.model.JobPosition;
 import com.aura.organizationapi.domain.repository.JobPositionRepository;
 import com.aura.organizationapi.domain.util.exception.JobPositionNotFoundException;
@@ -20,6 +21,7 @@ import java.util.UUID;
 public class JobPositionService {
 
     private final JobPositionRepository jobPositionRepository;
+    private final JobPositionMapper jobPositionMapper;
 
     public Page<JobPosition> findAll(Pageable pageable, JobPositionFilter filter) {
         return jobPositionRepository.findAll(pageable, filter);
@@ -31,13 +33,25 @@ public class JobPositionService {
     }
 
     public JobPosition create(JobPositionFormDTO jobPositionFormDTO) {
-        JobPosition jobPosition = JobPositionMapper.toJobPosition(jobPositionFormDTO);
+        JobPosition jobPosition = jobPositionMapper.toJobPosition(jobPositionFormDTO);
         return jobPositionRepository.create(jobPosition);
     }
 
     public JobPosition update(UUID id, JobPositionFormDTO jobPositionFormDTO) {
-        JobPosition oldJobPosition = findById(id);
-        JobPosition jobPosition = JobPositionMapper.toJobPosition(oldJobPosition, jobPositionFormDTO);
+        JobPosition jobPosition = findById(id);
+        jobPositionMapper.updateJobPositionFromDTO(jobPosition, jobPositionFormDTO);
+        return jobPositionRepository.update(jobPosition);
+    }
+
+    public JobPosition inactivate(UUID id) {
+        JobPosition jobPosition = findById(id);
+        jobPosition.setStatus(JobPosition.Status.INACTIVE);
+        return jobPositionRepository.update(jobPosition);
+    }
+
+    public JobPosition logicallyDelete(UUID id) {
+        JobPosition jobPosition = findById(id);
+        jobPosition.setStatus(JobPosition.Status.DELETED);
         return jobPositionRepository.update(jobPosition);
     }
 

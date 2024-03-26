@@ -12,7 +12,7 @@ public record UserDTO(
         Status status) {
 
     public enum Status {
-        ACTIVE,
+        ACTIVATED,
         INACTIVE,
         PENDING,
         BLOCKED,

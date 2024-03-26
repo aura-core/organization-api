@@ -1,8 +1,10 @@
 package com.aura.organizationapi.app.api.controller;
 
+import com.aura.organizationapi.app.api.dto.UnitDTO;
 import com.aura.organizationapi.app.api.dto.UserDTO;
 import com.aura.organizationapi.app.api.dto.UserFormDTO;
-import com.aura.organizationapi.app.api.mapper.UserMapper;
+import com.aura.organizationapi.domain.mapper.UserMapper;
+import com.aura.organizationapi.domain.model.Unit;
 import com.aura.organizationapi.domain.model.User;
 import com.aura.organizationapi.domain.service.UserService;
 import com.aura.organizationapi.domain.util.filter.UserFilter;
@@ -26,33 +28,62 @@ import java.util.UUID;
 public class UserController {
 
     private final UserService userService;
+    private final UserMapper userMapper;
 
     @GetMapping
     public ResponseEntity<Page<UserDTO>> findAll(@PageableDefault Pageable page,
                                                  @RequestParam(required = false) UserFilter filter) {
         Page<User> users = userService.findAll(page, filter);
-        Page<UserDTO> usersDTO = users.map(UserMapper::toUserDTO);
+        Page<UserDTO> usersDTO = users.map(userMapper::toUserDTO);
         return ResponseEntity.ok(usersDTO);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> findById(@PathVariable UUID id) {
         User user = userService.findById(id);
-        UserDTO dto = UserMapper.toUserDTO(user);
+        UserDTO dto = userMapper.toUserDTO(user);
         return ResponseEntity.ok(dto);
     }
 
     @PostMapping
     public ResponseEntity<UserDTO> create(@RequestBody @Valid UserFormDTO form) {
         User user = userService.create(form);
-        UserDTO dto = UserMapper.toUserDTO(user);
+        UserDTO dto = userMapper.toUserDTO(user);
         return ResponseEntity.created(URI.create("/api/v1/users/" + dto.id())).body(dto);
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<UserDTO> update(@PathVariable UUID id, @Valid UserFormDTO form) {
         User user = userService.update(id, form);
-        UserDTO dto = UserMapper.toUserDTO(user);
+        UserDTO dto = userMapper.toUserDTO(user);
+        return ResponseEntity.ok(dto);
+    }
+
+    @PatchMapping("/activate/{id}")
+    public ResponseEntity<UserDTO> activate(@PathVariable UUID id) {
+        User user = userService.activate(id);
+        UserDTO dto = userMapper.toUserDTO(user);
+        return ResponseEntity.ok(dto);
+    }
+
+    @PatchMapping("/inactivate/{id}")
+    public ResponseEntity<UserDTO> inactivate(@PathVariable UUID id) {
+        User user = userService.inactivate(id);
+        UserDTO dto = userMapper.toUserDTO(user);
+        return ResponseEntity.ok(dto);
+    }
+
+    @PatchMapping("/block/{id}")
+    public ResponseEntity<UserDTO> block(@PathVariable UUID id) {
+        User user = userService.block(id);
+        UserDTO dto = userMapper.toUserDTO(user);
+        return ResponseEntity.ok(dto);
+    }
+
+    @PatchMapping("/delete/{id}")
+    public ResponseEntity<UserDTO> logicallyDelete(@PathVariable UUID id) {
+        User user = userService.logicallyDelete(id);
+        UserDTO dto = userMapper.toUserDTO(user);
         return ResponseEntity.ok(dto);
     }
 

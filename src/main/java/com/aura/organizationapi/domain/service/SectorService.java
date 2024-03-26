@@ -1,16 +1,12 @@
 package com.aura.organizationapi.domain.service;
 
-import com.aura.organizationapi.app.api.dto.SectorDTO;
 import com.aura.organizationapi.app.api.dto.SectorFormDTO;
-import com.aura.organizationapi.app.api.mapper.SectorMapper;
-import com.aura.organizationapi.domain.model.Department;
+import com.aura.organizationapi.domain.mapper.SectorMapper;
+import com.aura.organizationapi.domain.model.JobPosition;
 import com.aura.organizationapi.domain.model.Sector;
 import com.aura.organizationapi.domain.model.User;
-import com.aura.organizationapi.domain.repository.DepartmentRepository;
 import com.aura.organizationapi.domain.repository.SectorRepository;
-import com.aura.organizationapi.domain.util.exception.DepartmentNotFoundException;
 import com.aura.organizationapi.domain.util.exception.SectorNotFoundException;
-import com.aura.organizationapi.domain.util.filter.DepartmentFilter;
 import com.aura.organizationapi.domain.util.filter.SectorFilter;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +23,7 @@ public class SectorService {
 
     private final SectorRepository sectorRepository;
     private final UserService userService;
+    private final SectorMapper sectorMapper;
 
     public Page<Sector> findAll(Pageable pageable, SectorFilter filter) {
         return sectorRepository.findAll(pageable, filter);
@@ -39,14 +36,26 @@ public class SectorService {
 
     public Sector create(SectorFormDTO sectorFormDTO) {
         User responsible = userService.findById(sectorFormDTO.responsibleId());
-        Sector sector = SectorMapper.toSector(sectorFormDTO, responsible);
+        Sector sector = sectorMapper.toSector(sectorFormDTO, responsible);
         return sectorRepository.create(sector);
     }
 
     public Sector update(UUID id, SectorFormDTO sectorFormDTO) {
-        Sector oldSector = findById(id);
+        Sector sector = findById(id);
         User responsible = userService.findById(sectorFormDTO.responsibleId());
-        Sector sector = SectorMapper.toSector(oldSector, sectorFormDTO, responsible);
+        sectorMapper.updateSectorFromDTO(sector, sectorFormDTO, responsible);
+        return sectorRepository.update(sector);
+    }
+
+    public Sector inactivate(UUID id) {
+        Sector sector = findById(id);
+        sector.setStatus(Sector.Status.INACTIVE);
+        return sectorRepository.update(sector);
+    }
+
+    public Sector logicallyDelete(UUID id) {
+        Sector sector = findById(id);
+        sector.setStatus(Sector.Status.DELETED);
         return sectorRepository.update(sector);
     }
 
