@@ -25,6 +25,16 @@ services:
     volumes:
       - ./temp/docker_volumes/keycloak_db:/var/lib/postgresql/data
 
+  aws_s3:
+    image: localstack/localstack
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=s3
+      - DEFAULT_REGION=us-east-1
+    volumes:
+      - ./temp/docker_volumes/s3:/var/run/docker.sock"
+
   keycloak:
     image: jboss/keycloak
     restart: always
