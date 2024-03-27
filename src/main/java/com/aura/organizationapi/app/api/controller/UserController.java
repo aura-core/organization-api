@@ -2,7 +2,7 @@ package com.aura.organizationapi.app.api.controller;
 
 import com.aura.organizationapi.app.api.dto.UserDto;
 import com.aura.organizationapi.app.api.dto.UserFormDto;
-import com.aura.organizationapi.app.api.dto.commons.RoleDto2;
+import com.aura.organizationapi.app.api.dto.commons.RoleDto;
 import com.aura.organizationapi.domain.mapper.RoleMapper;
 import com.aura.organizationapi.domain.mapper.UserMapper;
 import com.aura.organizationapi.domain.model.User;
@@ -62,14 +62,14 @@ public class UserController {
     }
 
     @PatchMapping("/add-roles/{id}")
-    public ResponseEntity<UserDto> addRoles(@PathVariable UUID id, Set<RoleDto2> rolesDto) {
+    public ResponseEntity<UserDto> addRoles(@PathVariable UUID id, Set<RoleDto> rolesDto) {
         User user = userService.addRoles(id, rolesDto);
         UserDto dto = userMapper.toUserDTO(user);
         return ResponseEntity.ok(dto);
     }
 
     @PatchMapping("/remove-roles/{id}")
-    public ResponseEntity<UserDto> removeRoles(@PathVariable UUID id, Set<RoleDto2> rolesDto) {
+    public ResponseEntity<UserDto> removeRoles(@PathVariable UUID id, Set<RoleDto> rolesDto) {
         User user = userService.removeRoles(id, rolesDto);
         UserDto dto = userMapper.toUserDTO(user);
         return ResponseEntity.ok(dto);

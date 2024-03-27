@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum RoleDto2 {
+public enum RoleDto {
 
     ROLE_WRITE_THIS("Leitura disso");
 

@@ -1,6 +1,6 @@
 package com.aura.organizationapi.app.api.dto.commons;
 
-public record AddressDto2(
+public record AddressDto(
         String street,
         Integer number,
         String complement,

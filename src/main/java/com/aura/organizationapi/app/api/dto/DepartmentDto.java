@@ -1,6 +1,6 @@
 package com.aura.organizationapi.app.api.dto;
 
-import com.aura.organizationapi.app.api.dto.commons.ContactDto2;
+import com.aura.organizationapi.app.api.dto.commons.ContactDto;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
@@ -11,7 +11,7 @@ public record DepartmentDto(
         @Size(max = 80) String name,
         @Size(max = 80) String description,
         UserDto responsible,
-        ContactDto2 contact,
+        ContactDto contact,
         Status status,
         LocalDateTime createdAt,
         String createdBy,
