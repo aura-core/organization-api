@@ -1,7 +1,7 @@
 package com.aura.organizationapi.domain.mapper;
 
-import com.aura.organizationapi.app.api.dto.TeamDTO;
-import com.aura.organizationapi.app.api.dto.TeamFormDTO;
+import com.aura.organizationapi.app.api.dto.TeamDto;
+import com.aura.organizationapi.app.api.dto.TeamFormDto;
 import com.aura.organizationapi.domain.model.Team;
 import com.aura.organizationapi.domain.model.User;
 import org.mapstruct.Mapper;
@@ -11,9 +11,9 @@ import org.mapstruct.ReportingPolicy;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface TeamMapper {
 
-    Team toTeam(TeamFormDTO teamFormDTO);
+    Team toTeam(TeamFormDto teamFormDTO);
 
-    default Team toTeam(TeamFormDTO teamFormDTO, User responsible) {
+    default Team toTeam(TeamFormDto teamFormDTO, User responsible) {
         if (teamFormDTO == null) {
             return null;
         }
@@ -22,9 +22,9 @@ public interface TeamMapper {
         return team;
     }
 
-    void updateTeamFromDTO(@MappingTarget Team team, TeamFormDTO teamFormDTO);
+    void updateTeamFromDTO(@MappingTarget Team team, TeamFormDto teamFormDTO);
 
-    default void updateTeamFromDTO(@MappingTarget Team team, TeamFormDTO teamFormDTO, User responsible) {
+    default void updateTeamFromDTO(@MappingTarget Team team, TeamFormDto teamFormDTO, User responsible) {
         if (team == null) {
             return;
         }
@@ -32,6 +32,6 @@ public interface TeamMapper {
         team.setResponsible(responsible);
     }
 
-    TeamDTO toTeamDTO(Team team);
+    TeamDto toTeamDTO(Team team);
 
 }

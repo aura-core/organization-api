@@ -1,7 +1,7 @@
 package com.aura.organizationapi.domain.mapper;
 
-import com.aura.organizationapi.app.api.dto.UnitDTO;
-import com.aura.organizationapi.app.api.dto.UnitFormDTO;
+import com.aura.organizationapi.app.api.dto.UnitDto;
+import com.aura.organizationapi.app.api.dto.UnitFormDto;
 import com.aura.organizationapi.domain.model.Unit;
 import com.aura.organizationapi.domain.model.User;
 import org.mapstruct.Mapper;
@@ -11,9 +11,9 @@ import org.mapstruct.ReportingPolicy;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface UnitMapper {
 
-    Unit toUnit(UnitFormDTO unitFormDTO);
+    Unit toUnit(UnitFormDto unitFormDTO);
 
-    default Unit toUnit(UnitFormDTO unitFormDTO, User responsible) {
+    default Unit toUnit(UnitFormDto unitFormDTO, User responsible) {
         if (unitFormDTO == null) {
             return null;
         }
@@ -22,9 +22,9 @@ public interface UnitMapper {
         return unit;
     }
 
-    void updateUnitFromDTO(@MappingTarget Unit unit, UnitFormDTO unitFormDTO);
+    void updateUnitFromDTO(@MappingTarget Unit unit, UnitFormDto unitFormDTO);
 
-    default void updateUnitFromDTO(@MappingTarget Unit unit, UnitFormDTO unitFormDTO, User responsible) {
+    default void updateUnitFromDTO(@MappingTarget Unit unit, UnitFormDto unitFormDTO, User responsible) {
         if (unit == null) {
             return;
         }
@@ -32,6 +32,6 @@ public interface UnitMapper {
         unit.setResponsible(responsible);
     }
 
-    UnitDTO toUnitDTO(Unit unit);
+    UnitDto toUnitDTO(Unit unit);
 
 }

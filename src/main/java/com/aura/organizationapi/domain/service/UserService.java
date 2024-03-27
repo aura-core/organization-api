@@ -1,10 +1,9 @@
 package com.aura.organizationapi.domain.service;
 
-import com.aura.organizationapi.app.api.dto.UserFormDTO;
+import com.aura.organizationapi.app.api.dto.UserFormDto;
 import com.aura.organizationapi.app.api.dto.commons.RoleDTO;
 import com.aura.organizationapi.domain.mapper.RoleMapper;
 import com.aura.organizationapi.domain.mapper.UserMapper;
-import com.aura.organizationapi.domain.model.Unit;
 import com.aura.organizationapi.domain.model.User;
 import com.aura.organizationapi.domain.model.commons.Role;
 import com.aura.organizationapi.domain.repository.UserRepository;
@@ -37,12 +36,12 @@ public class UserService {
                 .orElseThrow(() -> new UserNotFoundException(id));
     }
 
-    public User create(UserFormDTO userFormDTO) {
+    public User create(UserFormDto userFormDTO) {
         User user = userMapper.toUser(userFormDTO);
         return userRepository.create(user);
     }
 
-    public User update(UUID id, UserFormDTO userFormDTO) {
+    public User update(UUID id, UserFormDto userFormDTO) {
         User user = findById(id);
         userMapper.updateUserFromDTO(user, userFormDTO);
         return userRepository.update(user);

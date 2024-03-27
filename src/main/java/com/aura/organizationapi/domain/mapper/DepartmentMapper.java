@@ -1,7 +1,7 @@
 package com.aura.organizationapi.domain.mapper;
 
-import com.aura.organizationapi.app.api.dto.DepartmentDTO;
-import com.aura.organizationapi.app.api.dto.DepartmentFormDTO;
+import com.aura.organizationapi.app.api.dto.DepartmentDto;
+import com.aura.organizationapi.app.api.dto.DepartmentFormDto;
 import com.aura.organizationapi.domain.model.Department;
 import com.aura.organizationapi.domain.model.User;
 import org.mapstruct.Mapper;
@@ -11,9 +11,9 @@ import org.mapstruct.ReportingPolicy;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface DepartmentMapper {
 
-    Department toDepartment(DepartmentFormDTO departmentFormDTO);
+    Department toDepartment(DepartmentFormDto departmentFormDTO);
 
-    default Department toDepartment(DepartmentFormDTO departmentFormDTO, User responsible) {
+    default Department toDepartment(DepartmentFormDto departmentFormDTO, User responsible) {
         if (departmentFormDTO == null) {
             return null;
         }
@@ -22,9 +22,9 @@ public interface DepartmentMapper {
         return department;
     }
 
-    void updateDepartmentFromDTO(@MappingTarget Department department, DepartmentFormDTO departmentFormDTO);
+    void updateDepartmentFromDTO(@MappingTarget Department department, DepartmentFormDto departmentFormDTO);
 
-    default void updateDepartmentFromDTO(@MappingTarget Department department, DepartmentFormDTO departmentFormDTO, User responsible) {
+    default void updateDepartmentFromDTO(@MappingTarget Department department, DepartmentFormDto departmentFormDTO, User responsible) {
         if (department == null) {
             return;
         }
@@ -32,6 +32,6 @@ public interface DepartmentMapper {
         department.setResponsible(responsible);
     }
 
-    DepartmentDTO toDepartmentDTO(Department department);
+    DepartmentDto toDepartmentDTO(Department department);
 
 }

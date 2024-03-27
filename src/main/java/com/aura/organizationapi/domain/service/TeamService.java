@@ -1,8 +1,7 @@
 package com.aura.organizationapi.domain.service;
 
-import com.aura.organizationapi.app.api.dto.TeamFormDTO;
+import com.aura.organizationapi.app.api.dto.TeamFormDto;
 import com.aura.organizationapi.domain.mapper.TeamMapper;
-import com.aura.organizationapi.domain.model.Sector;
 import com.aura.organizationapi.domain.model.Team;
 import com.aura.organizationapi.domain.model.User;
 import com.aura.organizationapi.domain.repository.TeamRepository;
@@ -34,13 +33,13 @@ public class TeamService {
                 .orElseThrow(() -> new TeamNotFoundException(id));
     }
 
-    public Team create(TeamFormDTO teamFormDTO) {
+    public Team create(TeamFormDto teamFormDTO) {
         User responsible = userService.findById(teamFormDTO.responsibleId());
         Team team = teamMapper.toTeam(teamFormDTO, responsible);
         return teamRepository.create(team);
     }
 
-    public Team update(UUID id, TeamFormDTO teamFormDTO) {
+    public Team update(UUID id, TeamFormDto teamFormDTO) {
         Team team = findById(id);
         User responsible = userService.findById(teamFormDTO.responsibleId());
         teamMapper.updateTeamFromDTO(team, teamFormDTO, responsible);

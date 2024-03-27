@@ -1,6 +1,6 @@
 package com.aura.organizationapi.domain.service;
 
-import com.aura.organizationapi.app.api.dto.DepartmentFormDTO;
+import com.aura.organizationapi.app.api.dto.DepartmentFormDto;
 import com.aura.organizationapi.domain.mapper.DepartmentMapper;
 import com.aura.organizationapi.domain.model.Department;
 import com.aura.organizationapi.domain.model.User;
@@ -33,13 +33,13 @@ public class DepartmentService {
                 .orElseThrow(() -> new DepartmentNotFoundException(id));
     }
 
-    public Department create(DepartmentFormDTO departmentFormDTO) {
+    public Department create(DepartmentFormDto departmentFormDTO) {
         User responsible = userService.findById(departmentFormDTO.responsibleId());
         Department department = departmentMapper.toDepartment(departmentFormDTO, responsible);
         return departmentRepository.create(department);
     }
 
-    public Department update(UUID id, DepartmentFormDTO departmentFormDTO) {
+    public Department update(UUID id, DepartmentFormDto departmentFormDTO) {
         Department department = findById(id);
         User responsible = userService.findById(departmentFormDTO.responsibleId());
         departmentMapper.updateDepartmentFromDTO(department, departmentFormDTO, responsible);

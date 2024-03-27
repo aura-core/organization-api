@@ -21,7 +21,9 @@ public class JobPosition {
     private Set<Role> roles;
     private Status status = Status.ACTIVE;
     private LocalDateTime createdAt;
+    private String createdBy;
     private LocalDateTime updatedAt;
+    private String updatedBy;
 
     @Getter
     @AllArgsConstructor

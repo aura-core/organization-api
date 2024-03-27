@@ -1,7 +1,7 @@
 package com.aura.organizationapi.app.api.controller;
 
-import com.aura.organizationapi.app.api.dto.SectorDTO;
-import com.aura.organizationapi.app.api.dto.SectorFormDTO;
+import com.aura.organizationapi.app.api.dto.SectorDto;
+import com.aura.organizationapi.app.api.dto.SectorFormDto;
 import com.aura.organizationapi.domain.mapper.SectorMapper;
 import com.aura.organizationapi.domain.model.Sector;
 import com.aura.organizationapi.domain.service.SectorService;
@@ -29,45 +29,45 @@ public class SectorController {
     private final SectorMapper sectorMapper;
 
     @GetMapping
-    public ResponseEntity<Page<SectorDTO>> findAll(@PageableDefault Pageable page,
+    public ResponseEntity<Page<SectorDto>> findAll(@PageableDefault Pageable page,
                                                    @RequestParam(required = false) SectorFilter filter) {
         Page<Sector> sectors = sectorService.findAll(page, filter);
-        Page<SectorDTO> sectorDTOS = sectors.map(sectorMapper::toSectorDTO);
+        Page<SectorDto> sectorDTOS = sectors.map(sectorMapper::toSectorDTO);
         return ResponseEntity.ok(sectorDTOS);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SectorDTO> findById(@PathVariable UUID id) {
+    public ResponseEntity<SectorDto> findById(@PathVariable UUID id) {
         Sector sector = sectorService.findById(id);
-        SectorDTO dto = sectorMapper.toSectorDTO(sector);
+        SectorDto dto = sectorMapper.toSectorDTO(sector);
         return ResponseEntity.ok(dto);
     }
 
     @PostMapping
-    public ResponseEntity<SectorDTO> create(@RequestBody @Valid SectorFormDTO form) {
+    public ResponseEntity<SectorDto> create(@RequestBody @Valid SectorFormDto form) {
         Sector sector = sectorService.create(form);
-        SectorDTO dto = sectorMapper.toSectorDTO(sector);
+        SectorDto dto = sectorMapper.toSectorDTO(sector);
         return ResponseEntity.created(URI.create("/api/v1/sectors/" + dto.id())).body(dto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SectorDTO> update(@PathVariable UUID id, @RequestBody @Valid SectorFormDTO form) {
+    public ResponseEntity<SectorDto> update(@PathVariable UUID id, @RequestBody @Valid SectorFormDto form) {
         Sector sector = sectorService.update(id, form);
-        SectorDTO dto = sectorMapper.toSectorDTO(sector);
+        SectorDto dto = sectorMapper.toSectorDTO(sector);
         return ResponseEntity.ok(dto);
     }
 
     @PatchMapping("/inactivate/{id}")
-    public ResponseEntity<SectorDTO> inactivate(@PathVariable UUID id) {
+    public ResponseEntity<SectorDto> inactivate(@PathVariable UUID id) {
         Sector sector = sectorService.inactivate(id);
-        SectorDTO dto = sectorMapper.toSectorDTO(sector);
+        SectorDto dto = sectorMapper.toSectorDTO(sector);
         return ResponseEntity.ok(dto);
     }
 
     @PatchMapping("/delete/{id}")
-    public ResponseEntity<SectorDTO> logicallyDelete(@PathVariable UUID id) {
+    public ResponseEntity<SectorDto> logicallyDelete(@PathVariable UUID id) {
         Sector sector = sectorService.logicallyDelete(id);
-        SectorDTO dto = sectorMapper.toSectorDTO(sector);
+        SectorDto dto = sectorMapper.toSectorDTO(sector);
         return ResponseEntity.ok(dto);
     }
 

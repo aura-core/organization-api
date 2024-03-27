@@ -1,8 +1,7 @@
 package com.aura.organizationapi.domain.service;
 
-import com.aura.organizationapi.app.api.dto.JobPositionFormDTO;
+import com.aura.organizationapi.app.api.dto.JobPositionFormDto;
 import com.aura.organizationapi.domain.mapper.JobPositionMapper;
-import com.aura.organizationapi.domain.model.Department;
 import com.aura.organizationapi.domain.model.JobPosition;
 import com.aura.organizationapi.domain.repository.JobPositionRepository;
 import com.aura.organizationapi.domain.util.exception.JobPositionNotFoundException;
@@ -32,12 +31,12 @@ public class JobPositionService {
                 .orElseThrow(() -> new JobPositionNotFoundException(id));
     }
 
-    public JobPosition create(JobPositionFormDTO jobPositionFormDTO) {
+    public JobPosition create(JobPositionFormDto jobPositionFormDTO) {
         JobPosition jobPosition = jobPositionMapper.toJobPosition(jobPositionFormDTO);
         return jobPositionRepository.create(jobPosition);
     }
 
-    public JobPosition update(UUID id, JobPositionFormDTO jobPositionFormDTO) {
+    public JobPosition update(UUID id, JobPositionFormDto jobPositionFormDTO) {
         JobPosition jobPosition = findById(id);
         jobPositionMapper.updateJobPositionFromDTO(jobPosition, jobPositionFormDTO);
         return jobPositionRepository.update(jobPosition);

@@ -1,8 +1,7 @@
 package com.aura.organizationapi.domain.service;
 
-import com.aura.organizationapi.app.api.dto.SectorFormDTO;
+import com.aura.organizationapi.app.api.dto.SectorFormDto;
 import com.aura.organizationapi.domain.mapper.SectorMapper;
-import com.aura.organizationapi.domain.model.JobPosition;
 import com.aura.organizationapi.domain.model.Sector;
 import com.aura.organizationapi.domain.model.User;
 import com.aura.organizationapi.domain.repository.SectorRepository;
@@ -34,13 +33,13 @@ public class SectorService {
                 .orElseThrow(() -> new SectorNotFoundException(id));
     }
 
-    public Sector create(SectorFormDTO sectorFormDTO) {
+    public Sector create(SectorFormDto sectorFormDTO) {
         User responsible = userService.findById(sectorFormDTO.responsibleId());
         Sector sector = sectorMapper.toSector(sectorFormDTO, responsible);
         return sectorRepository.create(sector);
     }
 
-    public Sector update(UUID id, SectorFormDTO sectorFormDTO) {
+    public Sector update(UUID id, SectorFormDto sectorFormDTO) {
         Sector sector = findById(id);
         User responsible = userService.findById(sectorFormDTO.responsibleId());
         sectorMapper.updateSectorFromDTO(sector, sectorFormDTO, responsible);

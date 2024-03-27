@@ -24,7 +24,9 @@ public class User {
     private Set<Role> roles;
     private Status status = Status.PENDING;
     private LocalDateTime createdAt;
+    private String createdBy;
     private LocalDateTime updatedAt;
+    private String updatedBy;
 
     @Getter
     @AllArgsConstructor

@@ -1,8 +1,7 @@
 package com.aura.organizationapi.domain.service;
 
-import com.aura.organizationapi.app.api.dto.UnitFormDTO;
+import com.aura.organizationapi.app.api.dto.UnitFormDto;
 import com.aura.organizationapi.domain.mapper.UnitMapper;
-import com.aura.organizationapi.domain.model.Team;
 import com.aura.organizationapi.domain.model.Unit;
 import com.aura.organizationapi.domain.model.User;
 import com.aura.organizationapi.domain.repository.UnitRepository;
@@ -34,13 +33,13 @@ public class UnitService {
                 .orElseThrow(() -> new UnitNotFoundException(id));
     }
 
-    public Unit create(UnitFormDTO unitFormDTO) {
+    public Unit create(UnitFormDto unitFormDTO) {
         User responsible = userService.findById(unitFormDTO.responsibleId());
         Unit unit = unitMapper.toUnit(unitFormDTO, responsible);
         return unitRepository.create(unit);
     }
 
-    public Unit update(UUID id, UnitFormDTO unitFormDTO) {
+    public Unit update(UUID id, UnitFormDto unitFormDTO) {
         Unit unit = findById(id);
         User responsible = userService.findById(unitFormDTO.responsibleId());
         unitMapper.updateUnitFromDTO(unit, unitFormDTO, responsible);

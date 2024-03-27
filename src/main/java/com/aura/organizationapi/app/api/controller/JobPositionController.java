@@ -1,8 +1,7 @@
 package com.aura.organizationapi.app.api.controller;
 
-import com.aura.organizationapi.app.api.dto.JobPositionDTO;
-import com.aura.organizationapi.app.api.dto.JobPositionFormDTO;
-import com.aura.organizationapi.app.api.dto.commons.RoleDTO;
+import com.aura.organizationapi.app.api.dto.JobPositionDto;
+import com.aura.organizationapi.app.api.dto.JobPositionFormDto;
 import com.aura.organizationapi.domain.mapper.JobPositionMapper;
 import com.aura.organizationapi.domain.model.JobPosition;
 import com.aura.organizationapi.domain.service.JobPositionService;
@@ -17,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.Set;
 import java.util.UUID;
 
 @Slf4j
@@ -31,45 +29,45 @@ public class JobPositionController {
     private final JobPositionMapper jobPositionMapper;
 
     @GetMapping
-    public ResponseEntity<Page<JobPositionDTO>> findAll(@PageableDefault Pageable page,
+    public ResponseEntity<Page<JobPositionDto>> findAll(@PageableDefault Pageable page,
                                                         @RequestParam(required = false) JobPositionFilter filter) {
         Page<JobPosition> jobPositions = jobPositionService.findAll(page, filter);
-        Page<JobPositionDTO> jobPositionsDTO = jobPositions.map(jobPositionMapper::toJobPositionDTO);
+        Page<JobPositionDto> jobPositionsDTO = jobPositions.map(jobPositionMapper::toJobPositionDTO);
         return ResponseEntity.ok(jobPositionsDTO);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<JobPositionDTO> findById(@PathVariable UUID id) {
+    public ResponseEntity<JobPositionDto> findById(@PathVariable UUID id) {
         JobPosition jobPosition = jobPositionService.findById(id);
-        JobPositionDTO dto = jobPositionMapper.toJobPositionDTO(jobPosition);
+        JobPositionDto dto = jobPositionMapper.toJobPositionDTO(jobPosition);
         return ResponseEntity.ok(dto);
     }
 
     @PostMapping
-    public ResponseEntity<JobPositionDTO> create(@RequestBody @Valid JobPositionFormDTO form) {
+    public ResponseEntity<JobPositionDto> create(@RequestBody @Valid JobPositionFormDto form) {
         JobPosition jobPosition = jobPositionService.create(form);
-        JobPositionDTO dto = jobPositionMapper.toJobPositionDTO(jobPosition);
+        JobPositionDto dto = jobPositionMapper.toJobPositionDTO(jobPosition);
         return ResponseEntity.created(URI.create("/api/v1/job-positions/" + dto.id())).body(dto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<JobPositionDTO> update(@PathVariable UUID id, @RequestBody @Valid JobPositionFormDTO form) {
+    public ResponseEntity<JobPositionDto> update(@PathVariable UUID id, @RequestBody @Valid JobPositionFormDto form) {
         JobPosition jobPosition = jobPositionService.update(id, form);
-        JobPositionDTO dto = jobPositionMapper.toJobPositionDTO(jobPosition);
+        JobPositionDto dto = jobPositionMapper.toJobPositionDTO(jobPosition);
         return ResponseEntity.ok(dto);
     }
 
     @PatchMapping("/inactivate/{id}")
-    public ResponseEntity<JobPositionDTO> inactivate(@PathVariable UUID id) {
+    public ResponseEntity<JobPositionDto> inactivate(@PathVariable UUID id) {
         JobPosition jobPosition = jobPositionService.inactivate(id);
-        JobPositionDTO dto = jobPositionMapper.toJobPositionDTO(jobPosition);
+        JobPositionDto dto = jobPositionMapper.toJobPositionDTO(jobPosition);
         return ResponseEntity.ok(dto);
     }
 
     @PatchMapping("/delete/{id}")
-    public ResponseEntity<JobPositionDTO> logicallyDelete(@PathVariable UUID id) {
+    public ResponseEntity<JobPositionDto> logicallyDelete(@PathVariable UUID id) {
         JobPosition jobPosition = jobPositionService.logicallyDelete(id);
-        JobPositionDTO dto = jobPositionMapper.toJobPositionDTO(jobPosition);
+        JobPositionDto dto = jobPositionMapper.toJobPositionDTO(jobPosition);
         return ResponseEntity.ok(dto);
     }
 
