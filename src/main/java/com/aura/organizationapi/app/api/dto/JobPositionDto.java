@@ -1,6 +1,6 @@
 package com.aura.organizationapi.app.api.dto;
 
-import com.aura.organizationapi.app.api.dto.commons.RoleDTO;
+import com.aura.organizationapi.app.api.dto.commons.RoleDto2;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
@@ -11,7 +11,7 @@ public record JobPositionDto(
         UUID id,
         @Size(max = 80) String name,
         @Size(max = 80) String description,
-        Set<RoleDTO> roles,
+        Set<RoleDto2> roles,
         Status status,
         LocalDateTime createdAt,
         String createdBy,

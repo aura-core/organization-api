@@ -1,6 +1,6 @@
 package com.aura.organizationapi.app.api.dto;
 
-import com.aura.organizationapi.app.api.dto.commons.RoleDTO;
+import com.aura.organizationapi.app.api.dto.commons.RoleDto2;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
@@ -12,7 +12,7 @@ public record UserDto(
         @Size(max = 80) String name,
         @Size(max = 80) String email,
         @Size(max = 40) String login,
-        Set<RoleDTO> roles,
+        Set<RoleDto2> roles,
         Status status,
         LocalDateTime createdAt,
         String createdBy,

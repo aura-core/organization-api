@@ -1,7 +1,7 @@
 package com.aura.organizationapi.domain.service;
 
 import com.aura.organizationapi.app.api.dto.UserFormDto;
-import com.aura.organizationapi.app.api.dto.commons.RoleDTO;
+import com.aura.organizationapi.app.api.dto.commons.RoleDto2;
 import com.aura.organizationapi.domain.mapper.RoleMapper;
 import com.aura.organizationapi.domain.mapper.UserMapper;
 import com.aura.organizationapi.domain.model.User;
@@ -47,14 +47,14 @@ public class UserService {
         return userRepository.update(user);
     }
 
-    public User addRoles(UUID id, Set<RoleDTO> rolesDTO) {
+    public User addRoles(UUID id, Set<RoleDto2> rolesDTO) {
         User user = findById(id);
         Set<Role> roles = roleMapper.toRole(rolesDTO);
         user.getRoles().addAll(roles);
         return userRepository.update(user);
     }
 
-    public User removeRoles(UUID id, Set<RoleDTO> rolesDTO) {
+    public User removeRoles(UUID id, Set<RoleDto2> rolesDTO) {
         User user = findById(id);
         Set<Role> roles = roleMapper.toRole(rolesDTO);
         user.getRoles().removeAll(roles);
