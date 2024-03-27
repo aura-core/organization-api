@@ -32,8 +32,8 @@ public class UnitController {
     public ResponseEntity<Page<UnitDto>> findAll(@PageableDefault Pageable page,
                                                  @RequestParam(required = false) UnitFilter filter) {
         Page<Unit> units = unitService.findAll(page, filter);
-        Page<UnitDto> unitsDTO = units.map(unitMapper::toUnitDTO);
-        return ResponseEntity.ok(unitsDTO);
+        Page<UnitDto> unitsDto = units.map(unitMapper::toUnitDTO);
+        return ResponseEntity.ok(unitsDto);
     }
 
     @GetMapping("/{id}")

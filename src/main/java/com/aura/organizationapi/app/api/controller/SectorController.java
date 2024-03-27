@@ -32,8 +32,8 @@ public class SectorController {
     public ResponseEntity<Page<SectorDto>> findAll(@PageableDefault Pageable page,
                                                    @RequestParam(required = false) SectorFilter filter) {
         Page<Sector> sectors = sectorService.findAll(page, filter);
-        Page<SectorDto> sectorDTOS = sectors.map(sectorMapper::toSectorDTO);
-        return ResponseEntity.ok(sectorDTOS);
+        Page<SectorDto> sectorsDto = sectors.map(sectorMapper::toSectorDTO);
+        return ResponseEntity.ok(sectorsDto);
     }
 
     @GetMapping("/{id}")

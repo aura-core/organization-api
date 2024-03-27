@@ -32,8 +32,8 @@ public class DepartmentController {
     public ResponseEntity<Page<DepartmentDto>> findAll(@PageableDefault Pageable page,
                                                        @RequestParam(required = false) DepartmentFilter filter) {
         Page<Department> departments = departmentService.findAll(page, filter);
-        Page<DepartmentDto> departmentsDTO = departments.map(departmentMapper::toDepartmentDTO);
-        return ResponseEntity.ok(departmentsDTO);
+        Page<DepartmentDto> departmentsDto = departments.map(departmentMapper::toDepartmentDTO);
+        return ResponseEntity.ok(departmentsDto);
     }
 
     @GetMapping("/{id}")

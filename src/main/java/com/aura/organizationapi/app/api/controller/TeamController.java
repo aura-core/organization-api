@@ -32,8 +32,8 @@ public class TeamController {
     public ResponseEntity<Page<TeamDto>> findAll(@PageableDefault Pageable page,
                                                  @RequestParam(required = false) TeamFilter filter) {
         Page<Team> teams = teamService.findAll(page, filter);
-        Page<TeamDto> teamsDTO = teams.map(teamMapper::toTeamDTO);
-        return ResponseEntity.ok(teamsDTO);
+        Page<TeamDto> teamsDto = teams.map(teamMapper::toTeamDTO);
+        return ResponseEntity.ok(teamsDto);
     }
 
     @GetMapping("/{id}")

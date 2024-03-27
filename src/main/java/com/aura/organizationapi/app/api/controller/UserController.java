@@ -36,8 +36,8 @@ public class UserController {
     public ResponseEntity<Page<UserDto>> findAll(@PageableDefault Pageable page,
                                                  @RequestParam(required = false) UserFilter filter) {
         Page<User> users = userService.findAll(page, filter);
-        Page<UserDto> usersDTO = users.map(userMapper::toUserDTO);
-        return ResponseEntity.ok(usersDTO);
+        Page<UserDto> usersDto = users.map(userMapper::toUserDTO);
+        return ResponseEntity.ok(usersDto);
     }
 
     @GetMapping("/{id}")

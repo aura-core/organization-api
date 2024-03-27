@@ -32,8 +32,8 @@ public class JobPositionController {
     public ResponseEntity<Page<JobPositionDto>> findAll(@PageableDefault Pageable page,
                                                         @RequestParam(required = false) JobPositionFilter filter) {
         Page<JobPosition> jobPositions = jobPositionService.findAll(page, filter);
-        Page<JobPositionDto> jobPositionsDTO = jobPositions.map(jobPositionMapper::toJobPositionDTO);
-        return ResponseEntity.ok(jobPositionsDTO);
+        Page<JobPositionDto> jobPositionsDto = jobPositions.map(jobPositionMapper::toJobPositionDTO);
+        return ResponseEntity.ok(jobPositionsDto);
     }
 
     @GetMapping("/{id}")
